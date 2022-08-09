@@ -1,16 +1,33 @@
 import { useState } from 'react'
 import { Layout } from '@components/common'
 import Image from 'next/image'
+import axios from 'axios'
 
 export default function Home() {
   const [email, setEmail] = useState('')
+  const [state, setState] = useState('idle')
+  const [errorMsg, setErrorMsg] = useState(null)
 
-  const handleSubmit = (event: any) => {
+  const subscribe = async (event: any) => {
     event.preventDefault()
-    // alert(`The name you entered was: ${email}`)
-    console.log(`Send this email: ${email}`)
-    setEmail('')
+    setState('Loading')
+    if (email.trim().length <= 0) {
+      setState('Please e')
+    }
+
+    try {
+      const response = await axios.post('/api/mailchimp', { email })
+      console.log(response)
+      setState('Success')
+      setEmail('')
+    } catch (error) {
+      console.log({ error })
+      // setErrorMsg(error.response.data.error)
+      setState('Error')
+    }
   }
+
+  const handleEmailChange = (event: any) => setEmail(event.target.value)
 
   return (
     <section className="px-2 py-32 bg-white md:px-0 h-screen">
@@ -32,17 +49,23 @@ export default function Home() {
                 Sign up to be notified when we launch our first round of
                 buttons.
               </p>
-              <div className="flex">
-                <input
-                  type="text"
-                  name="email"
-                  className="w-3/5 px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none"
-                  placeholder="Email address"
-                />
+              <div>
+                <form className="flex" onSubmit={subscribe}>
+                  <input
+                    type="text"
+                    name="email"
+                    className="w-3/5 px-4 py-3 mb-4 border border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none"
+                    placeholder="Email address"
+                    value={email}
+                    onChange={handleEmailChange}
+                  />
 
-                <button className="w-1/5 px-3 py-3 mb-4 text-white bg-indigo-600 rounded-lg">
-                  Sign up!
-                </button>
+                  <button className="w-1/5 px-3 py-3 mb-4 text-white bg-indigo-600 rounded-lg">
+                    Sign up!
+                  </button>
+                </form>
+                {state === 'Error' && `${errorMsg}`}
+                {state === 'Success' && `Awesome, you've been subscribed!`}
               </div>
             </div>
           </div>

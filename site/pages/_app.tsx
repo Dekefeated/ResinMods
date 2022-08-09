@@ -20,11 +20,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   if (router.pathname != '/links') {
     return (
       <>
-        {/* <Head /> */}
+        <Head />
         <ManagedUIContext>
-          {/* <Layout pageProps={pageProps}> */}
-          <Component {...pageProps} />
-          {/* </Layout> */}
+          <Layout pageProps={pageProps}>
+            <Component {...pageProps} />
+          </Layout>
         </ManagedUIContext>
       </>
     )

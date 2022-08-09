@@ -1,90 +1,59 @@
-import commerce from '@lib/api/commerce'
+import { useState } from 'react'
 import { Layout } from '@components/common'
-import { ProductCard } from '@components/product'
-import { Grid, Marquee, Hero } from '@components/ui'
-// import HomeAllProductsGrid from '@components/common/HomeAllProductsGrid'
-import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
+import Image from 'next/image'
 
-export async function getStaticProps({
-  preview,
-  locale,
-  locales,
-}: GetStaticPropsContext) {
-  const config = { locale, locales }
-  const productsPromise = commerce.getAllProducts({
-    variables: { first: 6 },
-    config,
-    preview,
-    // Saleor provider only
-    ...({ featured: true } as any),
-  })
-  const pagesPromise = commerce.getAllPages({ config, preview })
-  const siteInfoPromise = commerce.getSiteInfo({ config, preview })
-  const { products } = await productsPromise
-  const { pages } = await pagesPromise
-  const { categories, brands } = await siteInfoPromise
+export default function Home() {
+  const [email, setEmail] = useState('')
 
-  return {
-    props: {
-      products,
-      categories,
-      brands,
-      pages,
-    },
-    revalidate: 60,
+  const handleSubmit = (event: any) => {
+    event.preventDefault()
+    // alert(`The name you entered was: ${email}`)
+    console.log(`Send this email: ${email}`)
+    setEmail('')
   }
-}
 
-export default function Home({
-  products,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <>
-      <Grid variant="filled">
-        {products.slice(0, 3).map((product: any, i: number) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            imgProps={{
-              width: i === 0 ? 1080 : 540,
-              height: i === 0 ? 1080 : 540,
-              priority: true,
-            }}
-          />
-        ))}
-      </Grid>
-      <Marquee variant="secondary">
-        {products.slice(0, 3).map((product: any, i: number) => (
-          <ProductCard key={product.id} product={product} variant="slim" />
-        ))}
-      </Marquee>
-      <Hero
-        headline=" Dessert dragée halvah croissant."
-        description="Cupcake ipsum dolor sit amet lemon drops pastry cotton candy. Sweet carrot cake macaroon bonbon croissant fruitcake jujubes macaroon oat cake. Soufflé bonbon caramels jelly beans. Tiramisu sweet roll cheesecake pie carrot cake. "
-      />
-      <Grid layout="B" variant="filled">
-        {products.slice(0, 3).map((product: any, i: number) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            imgProps={{
-              width: i === 0 ? 1080 : 540,
-              height: i === 0 ? 1080 : 540,
-            }}
-          />
-        ))}
-      </Grid>
-      <Marquee>
-        {products.slice(3).map((product: any, i: number) => (
-          <ProductCard key={product.id} product={product} variant="slim" />
-        ))}
-      </Marquee>
-      {/* <HomeAllProductsGrid
-        newestProducts={products}
-        categories={categories}
-        brands={brands}
-      /> */}
-    </>
+    <section className="px-2 py-32 bg-white md:px-0 h-screen">
+      <div className="container items-center max-w-6xl px-8 mx-auto xl:px-5">
+        <div className="flex flex-wrap items-center sm:-mx-3">
+          <div className="w-full md:w-1/2 md:px-3">
+            <div className="w-full pb-6 space-y-6 sm:max-w-md lg:max-w-lg md:space-y-4 lg:space-y-8 xl:space-y-9 sm:pr-5 lg:pr-0 md:pb-0">
+              <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-4xl lg:text-5xl xl:text-6xl">
+                <span className="block xl:inline">ResinMods </span>
+                <span className="block text-indigo-600 xl:inline">
+                  Coming Soon!
+                </span>
+              </h1>
+              <p className="mx-auto text-base text-gray-500 sm:max-w-md lg:text-xl md:max-w-3xl">
+                Custom buttons, shells, and more are currently being
+                handcrafted.
+              </p>
+              <p className="mx-auto text-base text-gray-500 sm:max-w-md lg:text-xl md:max-w-3xl">
+                Sign up to be notified when we launch our first round of
+                buttons.
+              </p>
+              <div className="flex">
+                <input
+                  type="text"
+                  name="email"
+                  className="w-3/5 px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none"
+                  placeholder="Email address"
+                />
+
+                <button className="w-1/5 px-3 py-3 mb-4 text-white bg-indigo-600 rounded-lg">
+                  Sign up!
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="w-full md:w-1/2">
+            <div className="w-full h-auto overflow-hidden rounded-md shadow-xl sm:rounded-xl">
+              <img src="https://cdn.devdojo.com/images/november2020/hero-image.jpeg" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   )
 }
 

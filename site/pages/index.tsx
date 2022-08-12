@@ -16,15 +16,15 @@ export default function Home() {
       setErrorMsg('')
       setSuccessMsg(() => `Awesome, you've been subscribed!`)
       console.log('Email is valid')
-      // try {
-      //   const response = await axios.post('/api/mailchimp', { email })
-      //   console.log(response)
-      //   setEmail('')
-      //   setSuccessMsg(() => `Awesome, you've been subscribed!`)
-      // } catch (error: any) {
-      //   console.log({ error })
-      //   setErrorMsg(() => error.response.data.error)
-      // }
+      try {
+        const response = await axios.post('/api/mailchimp', { email })
+        console.log(response)
+        setEmail('')
+        setSuccessMsg(() => `Awesome, you've been subscribed!`)
+      } catch (error: any) {
+        console.log({ error })
+        setErrorMsg(() => error.response.data.error)
+      }
     } else {
       console.log('Please enter a valid email')
       setErrorMsg('Please enter a valid email')
@@ -40,7 +40,7 @@ export default function Home() {
   return (
     <section
       style={{ backgroundColor: '#F4F2ED' }}
-      className="pt-24 text-black h-screen md:mt-0 md:h-screen flex flex-col justify-center text-center md:text-left md:flex-row md:justify-between md:items-center lg:px-48 md:px-12 px-4"
+      className="text-black h-screen md:mt-0 md:h-screen flex flex-col justify-center text-center md:text-left md:flex-row md:justify-between md:items-center lg:px-48 md:px-12 px-4"
     >
       <div className="md:flex-1 md:mr-10">
         <h1 className="font-pt-serif text-5xl font-bold mb-7">

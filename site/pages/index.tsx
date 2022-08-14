@@ -3,6 +3,8 @@ import { Layout } from '@components/common'
 import Image from 'next/image'
 import axios from 'axios'
 
+import ComingSoonImage from '../public/assets/images/ComingSoonHeaderImag80.webp'
+
 export default function Home() {
   const [email, setEmail] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
@@ -87,7 +89,7 @@ export default function Home() {
           <Image
             className="rounded-lg"
             alt="Clear GBS with custom resin buttons"
-            src="/assets/images/ComingSoonHeaderImage.webp"
+            src={ComingSoonImage}
             width="960px"
             height="540px"
             placeholder="blur"

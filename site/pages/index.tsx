@@ -84,10 +84,19 @@ export default function Home() {
       </div>
       <div className="flex justify-around md:block mt-8 md:mt-0 md:flex-1">
         <div className="relative">
-          <img
+          <Image
+            className="rounded-lg"
+            alt="Clear GBS with custom resin buttons"
+            src="/assets/images/ComingSoonHeaderImage.webp"
+            width="960px"
+            height="540px"
+            placeholder="blur"
+            // blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+          />
+          {/* <img
             className="rounded-lg"
             src="/assets/images/ComingSoonHeaderImage.png"
-          />
+          /> */}
         </div>
       </div>
     </section>
